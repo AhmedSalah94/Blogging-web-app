@@ -1,0 +1,46 @@
+<div class="form-group row">
+  <label class="col-sm-2">Title</label>
+  <div class="col-sm-10">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="title"
+      placeholder="Enter Title"
+    />
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-sm-2">Body</label>
+  <div class="col-sm-10">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="body"
+      placeholder="Enter Body"
+    />
+  </div>
+</div>
+
+<div class="form-group row" *ngIf="blog.id != null">
+  <label class="col-sm-2">Date</label>
+  <div class="col-sm-10">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="creationDate"
+      placeholder="Enter Date"
+    />
+  </div>
+</div>
+
+<ng-template #add>
+  <button (click)="addBlog()" class="btn btn-primary">Add</button> &nbsp;
+</ng-template>
+<button
+  (click)="updateBlog()"
+  *ngIf="blog.id; else add"
+  class="btn btn-primary"
+>
+  Update
+</button>

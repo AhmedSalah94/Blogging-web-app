@@ -1,0 +1,105 @@
+<!-- Button trigger modal -->
+<div class="text text-center" id="div1">
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+    (click)="AddBlog()"
+    data-keyborad="false"
+  >
+    Add Blog
+  </button>
+</div>
+<!-- Modal -->
+<ng-container>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
+          <button
+            id="close"
+            type="button"
+            class="btn-close"
+            (click)="closeClick()"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-add-edit-blog
+            [blog]="blog"
+            (btnClick)="btnClick()"
+            *ngIf="activateAddEditBlogCom"
+          >
+          </app-add-edit-blog>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Title</th>
+      <th>body</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let dataItem of blogList
+          | paginate
+            : {
+                id: 'foo',
+                itemsPerPage: 5,
+                currentPage: page,
+                totalItems: totalLength
+              };
+        let i = index
+      "
+    >
+      <td>{{ i + 1 }}</td>
+      <td>{{ dataItem.title }}</td>
+      <td>{{ dataItem.body }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          (click)="EditBlog(dataItem)"
+        >
+          Edit
+        </button>
+        &nbsp;
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteClick(dataItem)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  class="text-center my-pagination text-bold"
+  id="foo"
+  (pageChange)="page = $event"
+  screenReaderPageLabel="page"
+  screenReaderCurrentLabel="You're on page"
+  style="color: red; width: 100%; height: 70px"
+>
+</pagination-controls>
